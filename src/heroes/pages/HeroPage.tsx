@@ -15,7 +15,7 @@ export const HeroPage = () => {
   const heroe = useMemo(() => getHeroById(id), [id])
 
   if (!heroe) {
-    return <Navigate to='/marvel' />
+    return <Navigate to='/' />
   }
 
 
