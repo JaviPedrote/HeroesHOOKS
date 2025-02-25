@@ -9,7 +9,7 @@ export const LoginPage = () => {
 
   const onLogin = async () => {
     const lastPath = localStorage.getItem('lastPath') || '/';
-    await login('Javi')
+    await login('Usuario')
     navigate(lastPath , { replace: true })
   }
 

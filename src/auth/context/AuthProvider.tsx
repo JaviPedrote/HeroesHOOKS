@@ -5,11 +5,12 @@ import { types } from "../types/types";
 
 const initialState = {
   isLoggedIn: false,
-  user: null
+  user: 'usuario'
 }
 const init = () => {
 
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null;
+  localStorage.setItem('user', JSON.stringify({ id: 'ABC', name: 'Usuario' }))
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : 'null';
 
   return {
     isLoggedIn: !!user, //retorna true si user es diferente de null

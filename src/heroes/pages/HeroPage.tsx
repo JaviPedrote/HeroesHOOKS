@@ -26,7 +26,7 @@ export const HeroPage = () => {
 
   return (
     <div className=" flex mt-5">
-      <img className='h-96' src={`../../../assets/heroes/${heroe.id}.jpg`} alt={heroe.superhero} />
+      <img className='h-96' src={`../../../assets/heroes/${heroe.id}.webp`} alt={heroe.superhero} />
       <div className="ml-4 w-full">
         <h3 className="font-bold text-2xl">{heroe?.superhero}</h3>
         <ul className="pl-3 mr-10 mb-6">
