@@ -14,15 +14,14 @@ export const Navbar = () => {
 
     }
     return (
-        <nav className="bg-gray-900 text-white p-1 sm:p-4 flex sm:gap-6 items-center justify-between">
+        <nav className="bg-gray-900 text-white p-1 sm:p-4 flex sm:gap-6 items-center justify-between outline">
 
             <div className="flex sm:space-x-4 items-center">
-                <Link
+                <a href='https://www.kodedev.tech/'
                     className="sm:text-xl font-semibold sm:font-bold mr-3 sm:mr-10"
-                    to="/"
                 >
-                    Asociaciones
-                </Link>
+                    Portfolio
+                </a>
                 <NavLink
                     className={({ isActive }) => `sm:px-3 px-1 py-1 text-sm md:text-base sm:py-2 rounded ${isActive ? 'text-white' : 'hover:bg-gray-700 text-gray-400'}`}
                     to="/marvel"
@@ -44,10 +43,10 @@ export const Navbar = () => {
                 </NavLink>
             </div>
 
-            <div className='justify-end '>
+            <div className='flex text-center'>
 
-                <span className='text-blue-600'>{user?.name}</span>
-                <button onClick={onLogout} className="cursor-pointer mr-2 sm:px-3 pl-1 py-1 text-sm md:text-base sm:py-2 rounded text-gray-400 ml-2 sm:ml-8 hover:outline-2 hover:outline-blue-200 "
+                <span className='text-blue-600 sm:px-3 pl-1 py-1 text-sm md:text-base'>{user?.name}</span>
+                <button onClick={onLogout} className=" cursor-pointer mr-2 sm:px-3 px-1 py-1 text-sm md:text-base sm:py-2 rounded text-gray-400 ml-2 sm:ml-8 hover:outline-2 hover:outline-blue-200 "
                 >
                     Logout
                 </button>
