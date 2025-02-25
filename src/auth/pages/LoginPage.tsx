@@ -1,16 +1,16 @@
 import { useContext } from "react"
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
 
 export const LoginPage = () => {
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const { login } = useContext(AuthContext)
 
   const onLogin = async () => {
-    // const lastPath = localStorage.getItem('lastPath') || '/';
+    const lastPath = localStorage.getItem('lastPath') || '/';
     await login('Usuario')
-    // navigate(lastPath , { replace: true })
+    navigate(lastPath , { replace: true })
   }
 
   return (
