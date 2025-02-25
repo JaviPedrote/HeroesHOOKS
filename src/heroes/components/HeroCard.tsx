@@ -13,7 +13,7 @@ interface HeroCardProps {
 
 export const HeroCard = ({ hero }: HeroCardProps) => {
 
-    const heroImageUrl = `/assets/heroes/${hero.id}.jpg`
+    const heroImageUrl = `/assets/heroes/${hero.id}.webp`
 
 
     return (
