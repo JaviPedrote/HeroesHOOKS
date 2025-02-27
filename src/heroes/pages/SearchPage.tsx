@@ -25,7 +25,7 @@ export const SearchPage = () => {
   const showError = q!.length > 1 && heroes.length === 0;
 
   return (
-    <div className="m-4">
+    <div className="sm:m-4">
       <h1 className="text-3xl font-bold mb-3">Search</h1>
       <hr />
 
