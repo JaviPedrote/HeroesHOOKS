@@ -19,9 +19,9 @@ export const HeroCard = ({ hero }: HeroCardProps) => {
     return (
         <>
 
-            <div className="flex my-3 outline-2 outline-gray-300 rounded w-full pr-2">
-                <img className=" w-36 mr-6 rounded object-cover" src={heroImageUrl} alt="" />
-                <div>
+            <div className="flex my-3 outline-2 outline-gray-300 rounded w-[calc(100vw-70px)] md:w-full pr-2">
+                <img className=" w-36 md:mr-6 rounded object-cover" src={heroImageUrl} alt="" />
+                <div className="pl-2 md:pl-0">
                     <h5 className="text-2xl font-bold">{hero.superhero}</h5>
                     <div className="flex flex-col h-full max-h-[calc(100%-2rem)]">
 
