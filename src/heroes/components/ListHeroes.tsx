@@ -1,19 +1,21 @@
-import { getHeroesByPublisher } from "../helpers/getHeroesByPublisher";
-import { HeroCard } from "./HeroCard";
+import { HeroCard } from './HeroCard';
+import { getHeroesByPublisher } from '../helpers/getHeroesByPublisher';
 
-interface ListHeroesProps {
+interface Props {
   publisher: string;
 }
 
-export const ListHeroes: React.FC<ListHeroesProps> = ({ publisher }) => {
+export const ListHeroes = ({ publisher }: Props) => {
   const heroes = getHeroesByPublisher(publisher);
+
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full mr">
-        {heroes.map((heroes) => (
-          <HeroCard key={heroes.id} hero={heroes}/>
-        ))}
-      </div>
-    </>
+    <section
+      className="grid auto-rows-max gap-8
+                 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]"
+    >
+      {heroes.map(h => (
+        <HeroCard key={h.id} hero={h} />
+      ))}
+    </section>
   );
 };

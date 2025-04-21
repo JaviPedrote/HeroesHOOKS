@@ -9,6 +9,7 @@ export const PrivateRouter = ({ children }: { children: ReactNode }) => {
 
     const { pathname, search } = useLocation()
     const lastPath = pathname + search
+    console.log(lastPath)
     localStorage.setItem('lastPath',lastPath)
 
     return (isLoggedIn)

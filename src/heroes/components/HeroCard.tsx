@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { memo } from 'react';
+
 
 interface HeroCardProps {
     hero: {
@@ -12,32 +14,49 @@ interface HeroCardProps {
 }
 
 export const HeroCard = ({ hero }: HeroCardProps) => {
+  const img = `/assets/heroes/${hero.id}.webp`;
 
-    const heroImageUrl = `/assets/heroes/${hero.id}.webp`
-
-
-    return (
-        <>
-
-            <div className="flex my-3 outline-2 outline-gray-300 rounded w-[calc(100vw-32px)] sm:w-full sm:pr-2">
-                <img className=" w-36 md:mr-6 rounded object-cover" src={heroImageUrl} alt="" />
-                <div className="pl-2 md:pl-0">
-                    <h5 className="text-2xl font-bold">{hero.superhero}</h5>
-                    <div className="flex flex-col h-full max-h-[calc(100%-2rem)]">
-
-                        <p className="pt-3 font-semibold">{hero.alter_ego}</p>
-
-                        {
-                            (hero.characters !== hero.alter_ego) && (<p className="font-semibold pr-8">{hero.characters}</p>)
-                        }
-                        <p className="flex flex-col py-3 text-gray-500 font-semibold">{hero.first_appearance}</p>
-
-                        <Link className="cursor-pointer underline text-blue-600" to={`/hero/${hero.id}`}>
-                            Mas..
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-}
+  return (
+    <article
+      className="group overflow-hidden rounded-3xl bg-white/70 shadow-lg
+                 ring-1 ring-black/5 backdrop-blur-md transition
+                 hover:-translate-y-1 hover:shadow-2xl
+                 dark:bg-gray-900/60 dark:ring-white/10"
+    >
+      <div className="aspect-w-3 aspect-h-4">
+        <img
+          src={img}
+          alt={`Imagen de ${hero.superhero}`}
+          className="h-full w-full object-cover transition group-hover:scale-105"
+          loading="lazy"
+          onError={e =>
+            ((e.currentTarget as HTMLImageElement).src = '/assets/placeholder.webp')
+          }
+        />
+      </div>
+      <div className="flex flex-col p-5">
+        <h2 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          {hero.superhero}
+        </h2>
+        <p className="mt-1 font-medium text-gray-600 dark:text-gray-300">
+          {hero.alter_ego}
+        </p>
+        {hero.characters !== hero.alter_ego && (
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            {hero.characters}
+          </p>
+        )}
+        <p className="mt-4 text-xs uppercase tracking-widest text-gray-400">
+          {hero.first_appearance}
+        </p>
+        <Link
+          to={`/hero/${hero.id}`}
+          className="mt-4 inline-flex w-max items-center gap-1 self-start
+                     text-[#4f46e5] hover:underline"
+        >
+          Más detalles →
+        </Link>
+      </div>
+    </article>
+  );
+};

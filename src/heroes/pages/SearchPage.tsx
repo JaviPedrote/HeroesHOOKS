@@ -1,81 +1,81 @@
-import { HeroCard } from "../components/HeroCard";
-import { useForm } from "../../hooks/useForm";
-import { useLocation, useNavigate } from "react-router-dom";
-import queryString from "query-string";
-import { getByHeroByName } from "../helpers/getHeroByName";
+import { useLocation, useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
+import { useForm } from '../../hooks/useForm';
+import { getByHeroByName } from '../helpers/getHeroByName';
+import { HeroCard } from '../components/HeroCard';
 
 export const SearchPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { q = "" } = queryString.parse(location.search);
-  const query = typeof q === "string" ? q : undefined;
+  const { search } = useLocation();
+  const { q = '' } = queryString.parse(search);
+  const initialQuery = typeof q === 'string' ? q : '';
+  const { searchText, onInputChange } = useForm({ searchText: initialQuery });
 
-  // Manejo del formulario con estado sincronizado a la query
-  const { searchText, onInputChange } = useForm({ searchText: query });
-
-  const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchText!.length <= 1) return;
-    const normalizedQuery = searchText!.toLowerCase(); // Convertir a minúsculas
-    navigate(`?q=${normalizedQuery}`);
+    if ((searchText ?? '').trim().length <= 1) return;
+    navigate(`?q=${searchText!.toLowerCase()}`);
   };
 
-  const heroes = getByHeroByName(query);
-  const showSearch = q?.length === 0;
-  const showError = q!.length > 1 && heroes.length === 0;
+  const heroes = getByHeroByName(initialQuery);
+  const showSearch = initialQuery.length === 0;
+  const showError = initialQuery.length > 1 && heroes.length === 0;
 
   return (
-    <div className="sm:m-4">
-      <h1 className="text-3xl font-bold mb-3">Search</h1>
-      <hr />
+    <section className="space-y-8">
+      <h1 className="text-3xl font-extrabold text-[#4f46e5]">Search</h1>
+      <hr className="border-[#4f46e5]/30" />
 
-      <div className="flex flex-col md:flex-row mt-4">
-        {/* Sección de búsqueda */}
-        <div className="w-2/6">
-          <h4 className="font-semibold">Search</h4>
-          <hr className="my-3" />
-          <form onSubmit={onSearchSubmit} className="space-y-3">
-            <input
-              type="text"
-              placeholder="Buscar"
-              className="border border-gray-300 focus:border-blue-400 rounded w-full px-2 py-1 outline-none"
-              name="searchText"
-              autoComplete="off"
-              value={searchText}
-              onChange={onInputChange}
-            />
-            <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">
-              Buscar
-            </button>
-          </form>
-        </div>
-
-        {/* Sección de resultados */}
-        <div className="w-4/6 md:ml-4 mt-5 md:mt-0">
-          <h4 className="font-semibold">Results</h4>
-          <hr className="my-3" />
-          <div
-            className={`bg-blue-200 text-center py-3 rounded ${
-              showSearch ? "block" : "hidden"
-            }`}
+      <div className="flex flex-col gap-10 md:flex-row">
+        {/* Formulario */}
+        <form
+          onSubmit={onSubmit}
+          className="w-full max-w-sm space-y-4 rounded-3xl bg-gradient-to-r from-[#2ab6c9] via-[#7cd9e6] to-[#7cd9e6] p-6
+                     shadow-md ring-1 ring-black/5 backdrop-blur-md
+                     dark:bg-gray-900/60 dark:ring-white/10"
+        >
+          <label className="block text-sm font-semibold tracking-wide">
+            Busca tu héroe
+          </label>
+          <input
+            name="searchText"
+            autoComplete="off"
+            value={searchText}
+            onChange={onInputChange}
+            className="w-full rounded-lg border border-gray-300/50
+                       bg-transparent px-3 py-2 outline-none
+                       focus:border-[#4f46e5] focus:ring-1 focus:ring-[#4f46e5]
+                       dark:border-gray-600 dark:focus:border-[#4f46e5]"
+            placeholder="Batman…"
+          />
+          <button
+            className="w-full rounded-lg bg-[#4f46e5] px-4 py-2 font-bold text-white
+                       transition hover:bg-[#4f46e5]/90"
           >
-            Busca un héroe
-          </div>
-          <div
-            className={`bg-red-200 text-center py-3 rounded ${
-              showError ? "block" : "hidden"
-            }`}
-          >
-            Héroe no encontrado <b>{q}</b>
-          </div>
+            Buscar
+          </button>
+        </form>
 
-          <div className="grid grid-cols-1 gap-4">
-            {heroes.map((hero) => (
-              <HeroCard key={hero.id} hero={hero} />
+        {/* Resultados */}
+        <div className="flex-1 space-y-6">
+          {showSearch && (
+            <div className="rounded-xl bg-[#4f46e5]/10 p-4 text-center text-[#4f46e5]">
+              Escribe un nombre para comenzar
+            </div>
+          )}
+          {showError && (
+            <div className="rounded-xl bg-red-200 p-4 text-center text-red-600">
+              Héroe no encontrado <b>{q}</b>
+            </div>
+          )}
+
+          <div className="grid gap-8 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]">
+            {heroes.map(h => (
+              <HeroCard key={h.id} hero={h} />
             ))}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

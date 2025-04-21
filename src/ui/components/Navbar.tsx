@@ -1,57 +1,58 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { AuthContext } from '../../auth/context/AuthContext';
-import { useContext} from 'react';
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
 
-    const navigate  = useNavigate();
-    const {user , logout } = useContext(AuthContext)
-    
-    const onLogout = () => {
-        logout()
-        navigate('/login',{replace:true})
-    
+  const onLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
 
-    }
-    return (
-        <nav className="bg-gray-900 text-white p-1 sm:p-4 flex sm:gap-6 items-center justify-between outline">
+  return (
+    <nav
+      className="sticky top-0 z-50 flex items-center justify-between gap-4
+                 px-4 py-2 sm:px-6
+                 bg-gradient-to-r from-[#000130] via-[#86c9da] to-[#000000]
+                 text-white shadow-xl backdrop-blur-md"
+    >
+      <div className="flex items-center gap-2 sm:gap-6">
+        <a
+          href="https://www.kodedev.tech/"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="text-sm md:text-lg font-black tracking-tight hover:opacity-90"
+        >
+          Portfolio
+        </a>
 
-            <div className="flex sm:space-x-4 items-center">
-                <a href='https://www.kodedev.tech/'
-                    className="sm:text-xl font-semibold sm:font-bold mr-3 sm:mr-10"
-                >
-                    Portfolio
-                </a>
-                <NavLink
-                    className={({ isActive }) => `sm:px-3 px-1 py-1 text-sm md:text-base sm:py-2 rounded ${isActive ? 'text-white' : 'hover:bg-gray-700 text-gray-400'}`}
-                    to="/marvel"
-                >
-                    Marvel
-                </NavLink>
-
-                <NavLink
-                    className={({ isActive }) => `sm:px-3 px-1 py-1 text-sm md:text-base sm:py-2 rounded ${isActive ? 'text-white' : 'hover:bg-gray-700 text-gray-400'}`}
-                    to="/dc"
-                >
-                    DC
-                </NavLink>
-                <NavLink
-                    className={({ isActive }) => `sm:px-3 px-1 py-1 text-sm md:text-base sm:py-2 rounded ${isActive ? 'text-white' : 'hover:bg-gray-700 text-gray-400'}`}
-                    to="/search"
-                >
-                    Search
-                </NavLink>
-            </div>
-
-            <div className='flex text-center'>
-
-                <span className='text-blue-600 sm:px-3 pl-1 py-1 text-sm md:text-base'>{user?.name}</span>
-                <button onClick={onLogout} className=" cursor-pointer mr-2 sm:px-3 px-1 py-1 text-sm md:text-base sm:py-2 rounded text-gray-400 ml-2 sm:ml-8 hover:outline-2 hover:outline-blue-200 "
-                >
-                    Logout
-                </button>
-
-            </div>
-        </nav>
-    );
-}
+        {['marvel', 'dc', 'search'].map(path => (
+          <NavLink
+            key={path}
+            to={`/${path}`}
+            className={({ isActive }) =>
+              [
+                'rounded px-2 py-1 text-sm font-semibold capitalize',
+                isActive
+                  ? 'bg-white/20'
+                  : 'hover:bg-white/10 opacity-80 hover:opacity-100',
+              ].join(' ')
+            }
+          >
+            {path}
+          </NavLink>
+        ))}
+      </div>
+      <div className="flex items-center gap-2 lg:gap-4 text-sm font-medium">
+        <button
+          onClick={onLogout}
+          className="rounded bg-white/20 px-3 py-1 hover:bg-white/30"
+        >
+          Logout
+        </button>
+      </div>
+    </nav>
+  );
+};
